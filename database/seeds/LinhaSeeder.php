@@ -25,6 +25,7 @@ class LinhaSeeder extends Seeder
 
             DB::table('linhas')->insert([
                 'linha' => $linha,
+                'unidade_id' => 1,
                 'quantidade_produzida' => $produzida,
                 'quantidade_defeituosa' => $defeituosa,
                 'created_at' => now(),
