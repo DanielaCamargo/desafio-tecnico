@@ -93,7 +93,7 @@
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">
-                            Eficiência por Linha
+                            Gráfico de Eficiência por Linha
                         </h2>
                         <p class="text-sm text-gray-500 mt-1">
                             Comparativo de produtividade

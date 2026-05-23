@@ -46,4 +46,41 @@ class DashboardController extends Controller
             ], 500);
         }
     }
+
+    public function graficoLinhas(Request $request, $unidadeId) 
+    {
+        try {
+            $mes = $request->mes;
+            $ano = $request->ano;
+            $linhaId = $request->linha_id;
+
+            $linhas = LinhaService::getByUnidade(
+                $unidadeId,
+                $mes,
+                $ano,
+                $linhaId
+            );
+
+            $dados = $linhas->map(function ($linha) {
+                $producao = $linha->producoes->first();
+
+                return [
+                    'linha' => $linha->linha,
+                    'cor' => $linha->cor,
+                    'produtividade' => $producao
+                        ? $producao->produtividade
+                        : 0
+                ];
+            });
+
+            return response()->json($dados);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+
+        }
+    }
 }

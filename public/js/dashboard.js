@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     warningMessage.innerHTML = '';
     carregarLinhas(unidadeId, linhaId, mes, ano);
+    carregarGrafico(unidadeId, linhaId, mes, ano);
   });
 });
 function carregarLinhasSelect(unidadeId) {
@@ -149,6 +150,61 @@ function carregarLinhas(unidadeId, linhaId, mes, ano) {
       };
       return "\n                    <div class=\"space-y-3\">\n                        <div class=\"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-gray-50 hover:bg-gray-100 transition rounded-2xl px-5 py-4 mb-4 border border-gray-200\">\n                            <div class=\"flex items-center gap-4 min-w-[140px]\">\n                                <div>\n                                    <h3 class=\"text-base font-bold text-gray-800\">\n                                        Linha: ".concat(l.linha, "\n                                    </h3>\n                                    <p class=\"text-sm text-gray-500\">\n                                        ").concat(((_l$unidade = l.unidade) === null || _l$unidade === void 0 ? void 0 : _l$unidade.unidade) || '-', "\n                                    </p>\n                                </div>\n                            </div>\n                            <div class=\"flex flex-wrap gap-3\">\n                                <div class=\"bg-green-500 text-white rounded-xl px-4 py-3 min-w-[140px] shadow-sm\">\n                                    <div class=\"flex items-center justify-between mb-1\">\n                                        <span class=\"text-xs uppercase tracking-wide text-green-100\">\n                                            Produ\xE7\xE3o\n                                        </span>\n                                    </div>\n                                    <div class=\"text-2xl font-bold\">\n                                        ").concat(producao.quantidade_produzida, "\n                                    </div>\n                                </div>\n                                <div class=\"bg-red-500 text-white rounded-xl px-4 py-3 min-w-[140px] shadow-sm\">\n                                    <div class=\"flex items-center justify-between mb-1\">\n                                        <span class=\"text-xs uppercase tracking-wide text-red-100\">\n                                            Perdas\n                                        </span>\n                                    </div>\n                                    <div class=\"text-2xl font-bold\">\n                                        ").concat(producao.quantidade_defeituosa, "\n                                    </div>\n                                </div>\n                                <div class=\"bg-gray-900 text-white rounded-xl px-5 py-3 min-w-[140px] shadow-md border border-gray-700\">\n                                    <div class=\"text-xs uppercase tracking-wide text-gray-400 mb-1\">\n                                        Efici\xEAncia\n                                    </div>\n                                    <div class=\"flex items-center gap-2\">\n                                        <span class=\"text-3xl font-extrabold text-yellow-300\">\n                                            ").concat(producao.produtividade, "%\n                                        </span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>");
     }).join('');
+  })["catch"](function (error) {
+    console.error(error);
+  });
+}
+function carregarGrafico(unidadeId, linhaId, mes, ano) {
+  var params = new URLSearchParams({
+    mes: mes,
+    ano: ano
+  });
+  if (linhaId) {
+    params.append('linha_id', linhaId);
+  }
+  fetch("/dashboard/grafico/".concat(unidadeId, "?").concat(params.toString())).then(function (res) {
+    return res.json();
+  }).then(function (data) {
+    var labels = data.map(function (i) {
+      return i.linha;
+    });
+    var valores = data.map(function (i) {
+      return i.produtividade;
+    });
+    var cores = data.map(function (i) {
+      return i.cor;
+    });
+    var canvas = document.getElementById('graficoProdutividade');
+    var graficoExistente = Chart.getChart(canvas);
+    if (graficoExistente) {
+      graficoExistente.destroy();
+    }
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Eficiência (%)',
+          data: valores,
+          backgroundColor: cores,
+          borderRadius: 12
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
   })["catch"](function (error) {
     console.error(error);
   });

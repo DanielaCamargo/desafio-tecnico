@@ -5,23 +5,31 @@ use Illuminate\Support\Facades\DB;
 
 class LinhaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $linhas = [
-            'Geladeira',
-            'Máquina de Lavar',
-            'TV',
-            'Ar-Condicionado'
+            [
+                'linha' => 'Geladeira',
+                'cor' => '#3B82F6'
+            ],
+            [
+                'linha' => 'Máquina de Lavar',
+                'cor' => '#22C55E'
+            ],
+            [
+                'linha' => 'TV',
+                'cor' => '#F59E0B'
+            ],
+            [
+                'linha' => 'Ar-Condicionado',
+                'cor' => '#EF4444'
+            ]
         ];
 
         foreach ($linhas as $linha) {
             DB::table('linhas')->insert([
-                'linha' => $linha,
+                'linha' => $linha['linha'],
+                'cor' => $linha['cor'],
                 'unidade_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -17,3 +17,4 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', [DashboardController::class, 'index']);
 Route::get('/dashboard/unidade/{id}/linhas', [DashboardController::class, 'buscarLinhas']);
 Route::get('/dashboard/linhas/{id}', [DashboardController::class, 'filtrarLinhas']);
+Route::get('/dashboard/grafico/{id}', [DashboardController::class, 'graficoLinhas']);

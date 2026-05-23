@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         warningMessage.innerHTML = '';
         carregarLinhas(unidadeId, linhaId, mes, ano);
+        carregarGrafico(unidadeId, linhaId, mes, ano);
     });
 });
 
@@ -138,6 +139,64 @@ function carregarLinhas(unidadeId, linhaId, mes, ano) {
                         </div>
                     </div>`;
             }).join('');
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+function carregarGrafico(unidadeId, linhaId, mes, ano) {
+
+    const params = new URLSearchParams({
+        mes,
+        ano
+    });
+
+    if (linhaId) {
+        params.append('linha_id', linhaId);
+    }
+
+    fetch(`/dashboard/grafico/${unidadeId}?${params.toString()}`)
+        .then(res => res.json())
+        .then(data => {
+
+            const labels = data.map(i => i.linha);
+            const valores = data.map(i => i.produtividade);
+            const cores = data.map(i => i.cor);
+
+            const canvas = document.getElementById('graficoProdutividade');
+            const graficoExistente = Chart.getChart(canvas);
+
+            if (graficoExistente) {
+                graficoExistente.destroy();
+            }
+
+            new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Eficiência (%)',
+                        data: valores,
+                        backgroundColor: cores,
+                        borderRadius: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
         })
         .catch(error => {
             console.error(error);

@@ -11,6 +11,7 @@ class Linha extends Model
     protected $fillable = [
         'unidade_id',
         'linha',
+        'cor'
     ];
 
     public function unidade()
