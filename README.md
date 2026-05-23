@@ -1,6 +1,6 @@
 # Desafio Técnico
 
-Dashboard de monitoramento de eficiência por linha de produção, desenvolvido com Laravel 7, Vue.js 2 e Tailwind CSS.
+Dashboard de monitoramento de eficiência por linha de produção, desenvolvido com Laravel 7 e Tailwind CSS.
 
 ## Tecnologias
 
@@ -10,7 +10,6 @@ Dashboard de monitoramento de eficiência por linha de produção, desenvolvido 
 | Laravel        | 7.x     |
 | Composer       | ^2.x    |
 | Node.js        | 16.x    |
-| Vue.js         | 2.x     |
 | Tailwind CSS   | 1.x     |
 | MySQL          | 8.x     |
 
