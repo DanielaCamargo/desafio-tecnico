@@ -60,7 +60,7 @@
 
                         <select id="linha_id" class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-gray-700 shadow-sm focus:border-gray-500 focus:ring-2 focus:ring-gray-300 focus:outline-none">
                             <option value="">
-                                Selecione uma linha
+                                Todas as linhas
                             </option>
                         </select>
                         <div>
