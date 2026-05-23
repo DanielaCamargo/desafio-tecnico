@@ -20,14 +20,9 @@ class LinhaSeeder extends Seeder
         ];
 
         foreach ($linhas as $linha) {
-            $produzida = rand(100, 1000);
-            $defeituosa = rand(1, $produzida);
-
             DB::table('linhas')->insert([
                 'linha' => $linha,
                 'unidade_id' => 1,
-                'quantidade_produzida' => $produzida,
-                'quantidade_defeituosa' => $defeituosa,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

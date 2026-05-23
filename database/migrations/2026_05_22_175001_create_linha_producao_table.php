@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLinhasTable extends Migration
+class CreateLinhaProducaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,18 @@ class CreateLinhasTable extends Migration
      */
     public function up()
     {
-        Schema::create('linhas', function (Blueprint $table) {
+        Schema::create('linha_producoes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unidade_id');
-            $table->string('linha', 255);
+            $table->unsignedBigInteger('linha_id');
+            $table->integer('mes');
+            $table->integer('ano');
+            $table->integer('quantidade_produzida')->default(0);
+            $table->integer('quantidade_defeituosa')->default(0);
             $table->timestamps();
 
-            
-            $table->foreign('unidade_id')
+            $table->foreign('linha_id')
                 ->references('id')
-                ->on('unidades')
+                ->on('linhas')
                 ->onDelete('cascade');
         });
     }
@@ -34,6 +36,6 @@ class CreateLinhasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('linhas');
+        Schema::dropIfExists('linha_producao');
     }
 }

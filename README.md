@@ -15,8 +15,5 @@
 8º php artisan db:seed
 
 # Rodar o projeto
-- npm run dev
-- php artisan serve
 
-# versão node 16 (laravel mix)
-- nvm use 16
+- npm run dev-artisan <!-- comando criado para rodar os dois comandos necessários npm run dev && php artisan serve -->

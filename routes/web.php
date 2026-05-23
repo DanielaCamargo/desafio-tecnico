@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DashboardController::class, 'index']);
+Route::get('/dashboard/unidade/{id}/linhas', [DashboardController::class, 'buscarLinhas']);
+Route::get('/dashboard/linhas/{id}', [DashboardController::class, 'filtrarLinhas']);
