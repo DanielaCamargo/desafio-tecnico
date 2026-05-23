@@ -183,6 +183,7 @@ function carregarGrafico(unidadeId, linhaId, mes, ano) {
                     }]
                 },
                 options: {
+                    indexAxis: 'y',
                     responsive: true,
                     plugins: {
                         legend: {
